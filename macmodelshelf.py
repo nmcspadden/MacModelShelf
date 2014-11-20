@@ -10,9 +10,8 @@ from xml.etree import ElementTree
 DBPATH = "macmodelshelf.json"
 
 try:
-	f = open(DBPATH, 'rw')
-	macmodelshelf = json.load(f)
-	f.close()
+	with open(DBPATH) as f:
+		macmodelshelf = json.load(f)
 except BaseException, e:
 	print >>sys.stderr, "Couldn't open macmodelshelf.db: %s" % e
 	sys.exit(1)
@@ -45,17 +44,14 @@ def model(code):
 		model = lookup_mac_model_code_from_apple(code)
 		if model:
 			macmodelshelf[code] = model
-			f = open(DBPATH, 'w')
-			json.dump(macmodelshelf, f)
-			f.close()
+			with open(DBPATH) as file:
+				json.dump(macmodelshelf, file)
 	return model
 
 
 def _dump():
-	print "macmodelshelfdump = {"
-	for code, model in sorted(macmodelshelf.items()):
-		print '	   "%s": "%s",' % (code, model)
-	print "}"
+	print "macmodelshelfdump = "
+	print json.dumps(macmodelshelf, sort_keys=True, indent=2)
 	
 
 if __name__ == '__main__':
