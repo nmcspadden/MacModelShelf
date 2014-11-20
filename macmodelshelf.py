@@ -44,7 +44,7 @@ def model(code):
 		model = lookup_mac_model_code_from_apple(code)
 		if model:
 			macmodelshelf[code] = model
-			with open(DBPATH) as file:
+			with open(DBPATH, 'w') as file:
 				json.dump(macmodelshelf, file)
 	return model
 
