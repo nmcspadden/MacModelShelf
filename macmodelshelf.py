@@ -4,10 +4,11 @@
 import sys
 import urllib2
 import json
+import os.path
 from xml.etree import ElementTree
 
 
-DBPATH = "macmodelshelf.json"
+DBPATH = os.path.join(os.path.dirname(os.path.realpath(__file__)), "macmodelshelf.json")
 
 try:
 	with open(DBPATH) as f:
